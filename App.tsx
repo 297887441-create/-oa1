@@ -162,10 +162,24 @@ const App: React.FC = () => {
     }
   };
 
+  // 定义不需要底部导航栏的页面
+  const hideNavPages = [
+    PageType.LOGIN,
+    PageType.ADMIN_PC_WORKBENCH,
+    PageType.WORKFLOW_EDITOR,
+    PageType.HR_STAFF_MANAGEMENT,
+    PageType.HR_ANNOUNCEMENT_MANAGEMENT,
+    PageType.HR_RP_MANAGEMENT,
+    PageType.SALARY_SLIP,
+    PageType.ORG_STRUCTURE
+  ];
+
+  const isPCMode = currentPage === PageType.ADMIN_PC_WORKBENCH;
+
   return (
-    <div className="max-w-md mx-auto bg-white min-h-screen relative overflow-x-hidden shadow-2xl">
+    <div className={`min-h-screen relative overflow-x-hidden transition-all duration-500 ${isPCMode ? 'w-full' : 'max-w-md mx-auto shadow-2xl bg-white'}`}>
       {renderPage()}
-      {![PageType.LOGIN, PageType.ADMIN_PC_WORKBENCH, PageType.WORKFLOW_EDITOR, PageType.HR_STAFF_MANAGEMENT, PageType.ORG_STRUCTURE].includes(currentPage) && (
+      {!hideNavPages.includes(currentPage) && (
         <nav className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/95 backdrop-blur-md border-t border-slate-100 flex justify-around items-center py-2 pb-6 z-40 h-20">
           <button onClick={() => setCurrentPage(PageType.HOME)} className={`flex flex-col items-center gap-1 ${currentPage === PageType.HOME ? 'text-primary' : 'text-slate-300'}`}>
             <span className="material-symbols-outlined !text-2xl">home</span>
